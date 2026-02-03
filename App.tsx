@@ -11,6 +11,7 @@ import {
   Dimensions,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { AuthNavigation } from "./src/navigations/AuthNavigation";
 
 /**
 Android에서 SafeArea 제대로 작동시키려면:
@@ -32,7 +33,7 @@ function AppContent() {
         translucent={true}
       />
       <SafeAreaView style={styles.safeareaview} edges={["top", "bottom"]}>
-        <Text>이제 되는거냐</Text>
+        <AuthNavigation />
       </SafeAreaView>
     </>
   );
