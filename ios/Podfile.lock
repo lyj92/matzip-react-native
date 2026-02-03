@@ -1332,7 +1332,7 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
-  - react-native-safe-area-context (5.6.2):
+  - react-native-safe-area-context (4.8.2):
     - React-Core
   - React-NativeModulesApple (0.79.4):
     - glog
@@ -1656,6 +1656,54 @@ PODS:
     - React-logger (= 0.79.4)
     - React-perflogger (= 0.79.4)
     - React-utils (= 0.79.4)
+  - RNGestureHandler (2.14.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - RNScreens (3.29.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - SocketRocket (0.7.1)
   - Yoga (0.0.0)
 
@@ -1732,6 +1780,8 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1880,6 +1930,10 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1922,7 +1976,7 @@ SPEC CHECKSUMS:
   React-logger: 694787b12186eeeadccdfdc6769890e9080c1f11
   React-Mapbuffer: a0ee08ac29b8a2c08692aa0d51cefa1c88860e17
   React-microtasksnativemodule: ef2292ca147fa8793305e4693586ad0caf3afad3
-  react-native-safe-area-context: 6c8805194166a9d6b3e53ba69ca76756c9bfb052
+  react-native-safe-area-context: bf9d9d58f0f6726d4a6257088044c2595017579d
   React-NativeModulesApple: da60186ad0aafff031a9bc86b048711d34acc813
   React-oscompat: 472a446c740e39ee39cd57cd7bfd32177c763a2b
   React-perflogger: bbca3688c62f4f39e972d6e21969c95fe441fb6c
@@ -1954,6 +2008,8 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: bf62814e0fde923f73fc64b7e82d76c63c284da9
   ReactCodegen: f891084749d03b8af8a244cefaa492e491b763fd
   ReactCommon: c7d636ec1b9801ff4ee83cce8e0bf74a1610fc3f
+  RNGestureHandler: aa39e600c5b0b20aea4ed295018b496e7762cada
+  RNScreens: abefc8698530a24dd0092cd270bf99da5780d1d7
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: a6cb833e04fb8c59a012b49fb1d040fcb0cbb633
 

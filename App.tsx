@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,7 +10,7 @@ import {
   View,
   Dimensions,
 } from "react-native";
-import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 /**
 Android에서 SafeArea 제대로 작동시키려면:
@@ -32,25 +32,7 @@ function AppContent() {
         translucent={true}
       />
       <SafeAreaView style={styles.safeareaview} edges={["top", "bottom"]}>
-        <View style={styles?.container1}>
-          <Text style={styles.text}>텍스트</Text>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri: "https://reactnative.dev/img/tiny_logo.png",
-            }}
-          />
-          <TextInput
-            style={styles.input}
-            value={value}
-            onChangeText={setValue}
-          />
-          <Button title="버튼이름" onPress={() => console.log("hi")} />
-        </View>
-
-        <View style={styles?.container2}>
-          <Text style={styles.text2}>텍스트</Text>
-        </View>
+        <Text>이제 되는거냐</Text>
       </SafeAreaView>
     </>
   );
