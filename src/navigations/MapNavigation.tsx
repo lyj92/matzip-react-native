@@ -1,8 +1,8 @@
+import { colors } from "@/constants/colors";
+import AddLocationScreen from "@/screens/map/AddLocationScreen";
+import MapHomeScreen from "@/screens/map/MapHomeScreen";
+import SearchLocationScreen from "@/screens/map/SearchLocationScreen";
 import { createStackNavigator } from "@react-navigation/stack";
-import MapHomeScreen from "../screens/map/MapHomeScreen";
-import AddLocationScreen from "../screens/map/AddLocationScreen";
-import SearchLocationScreen from "../screens/map/SearchLocationScreen";
-import { colors } from "../constants/colors";
 
 /**
  * 맵 스택 스크린 종류

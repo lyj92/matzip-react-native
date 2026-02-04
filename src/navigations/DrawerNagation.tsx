@@ -1,14 +1,13 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import FeedListScreen from "../screens/feed/FeedListScreen";
-import CalendarScreen from "../screens/calendar/CalendarScreen";
+import CalendarScreen from "@/screens/calendar/CalendarScreen";
 import { createStaticNavigation } from "@react-navigation/native";
 import { MapStack } from "./MapNavigation";
 import { FeedStack } from "./FeedNavigation";
-import DrawerButton from "../components/DrawerButton";
-import { colors } from "../constants/colors";
-import CustomDrawerContent from "../components/CustomDrawerContent";
-import { MainDrawerParamList } from "../types/navigation";
+import DrawerButton from "@/components/DrawerButton";
+import CustomDrawerContent from "@/components/CustomDrawerContent";
+import { MainDrawerParamList } from "@/types/navigation";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6";
+import { colors } from "@/constants/colors";
 
 type DrawerItemName = "map" | "book" | "calendar";
 

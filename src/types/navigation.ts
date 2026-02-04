@@ -1,4 +1,4 @@
-import {NavigatorScreenParams} from '@react-navigation/native';
+import { NavigatorScreenParams } from "@react-navigation/native";
 
 /**
  * 맵 네비게이션 타입
@@ -43,9 +43,9 @@ export type AuthStackParamList = {
  */
 export type FeedStackParamList = {
   FeedList: undefined;
-  FeedDetail: {id: number}; // id 파라미터 필수
+  FeedDetail: { id: number }; // id 파라미터 필수
   FeedFavorite: undefined;
-  EditLocation: {id: number}; // id 파라미터 필수
+  EditLocation: { id: number }; // id 파라미터 필수
 };
 
 /**

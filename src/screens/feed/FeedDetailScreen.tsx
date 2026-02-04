@@ -14,18 +14,18 @@
  * navigation.navigate('FeedDetail', { id: 123 });  // 이렇게 호출됨
  * const { id } = route.params;                      // 이렇게 받음
  */
-import {StackScreenProps} from '@react-navigation/stack';
-import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-import {FeedStackParamList} from '../../types/navigation';
+import { FeedStackParamList } from "@/types/navigation";
+import { StackScreenProps } from "@react-navigation/stack";
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
 
 // StackScreenProps: navigation + route 둘 다 포함된 타입
 // 두 번째 제네릭 'FeedDetail'로 해당 스크린의 params 타입 { id: number } 추론
-type Props = StackScreenProps<FeedStackParamList, 'FeedDetail'>;
+type Props = StackScreenProps<FeedStackParamList, "FeedDetail">;
 
-function FeedDetailScreen({route}: Props) {
+function FeedDetailScreen({ route }: Props) {
   // route.params로 전달받은 파라미터 접근
-  const {id} = route.params;
+  const { id } = route.params;
 
   return (
     <View>
