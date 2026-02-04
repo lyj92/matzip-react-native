@@ -301,6 +301,75 @@ function HomeScreen() {
 }
 ```
 
+### 7.3 StackScreenProps vs StackNavigationProp
+
+두 타입의 핵심 차이:
+
+| | StackScreenProps | StackNavigationProp |
+|---|---|---|
+| **포함하는 것** | `navigation` + `route` 둘 다 | `navigation`만 |
+| **사용 상황** | 스크린 컴포넌트의 props 타입 | useNavigation 훅의 타입 |
+| **파라미터 접근** | `route.params`로 접근 가능 | 불가능 |
+
+#### StackScreenProps 사용 (파라미터를 받아야 할 때)
+
+```tsx
+import { StackScreenProps } from '@react-navigation/stack';
+
+// 타입 정의
+type FeedStackParamList = {
+  FeedList: undefined;
+  FeedDetail: { id: number };  // id 파라미터 필수
+};
+
+// StackScreenProps: navigation + route 둘 다 포함
+type Props = StackScreenProps<FeedStackParamList, 'FeedDetail'>;
+
+function FeedDetailScreen({ route, navigation }: Props) {
+  const { id } = route.params;  // ✅ route.params 접근 가능
+
+  return <Text>Feed ID: {id}</Text>;
+}
+
+// 호출 시
+navigation.navigate('FeedDetail', { id: 123 });
+```
+
+#### StackNavigationProp 사용 (이동만 할 때)
+
+```tsx
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+// 타입 정의
+type AuthStackParamList = {
+  AuthHome: undefined;
+  Login: undefined;
+};
+
+// StackNavigationProp: navigation만 포함
+type Navigation = StackNavigationProp<AuthStackParamList>;
+
+function AuthHomeScreen() {
+  const navigation = useNavigation<Navigation>();
+
+  // ✅ 이동만 하면 됨 (파라미터 받을 필요 없음)
+  return (
+    <Button onPress={() => navigation.navigate('Login')}>
+      로그인으로 이동
+    </Button>
+  );
+}
+```
+
+#### 언제 뭘 써야 하나?
+
+```
+파라미터 받아야 해? (route.params 필요)
+  ├─ YES → StackScreenProps
+  └─ NO  → StackNavigationProp (useNavigation 훅과 함께)
+```
+
 ---
 
 ## 8. 빌드 및 실행
