@@ -3,17 +3,18 @@ import AuthHomeScreen from "../screens/auth/AuthHomeScreen";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import { createStaticNavigation } from "@react-navigation/native";
+import { colors } from "../constants/colors";
 
 const AuthStack = createStackNavigator({
   // 헤더 옵션들
   screenOptions: {
     headerTitleAlign: "center",
     headerBackButtonDisplayMode: "minimal",
-    headerTintColor: "black",
+    headerTintColor: colors?.BLACK,
     // 헤더 스타일
     headerStyle: {
-      backgroundColor: "white",
-      shadowColor: "gray",
+      backgroundColor: colors?.WHITE,
+      shadowColor: colors?.GRAY_500,
     },
     // 헤더 폰트 스타일
     headerTitleStyle: {

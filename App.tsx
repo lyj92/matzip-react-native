@@ -1,8 +1,7 @@
 import React from "react";
 import { StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { AuthNavigation } from "./src/navigations/AuthNavigation";
-// import DrawerNavigation from "./src/navigations/DrawerNagation";
+import RootNavigation from "./src/navigations/RootNavigation";
 
 export default function App() {
   return (
@@ -12,8 +11,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent={true}
       />
-      <AuthNavigation />
-      {/* <DrawerNavigation /> */}
+      <RootNavigation />
     </SafeAreaProvider>
   );
 }
