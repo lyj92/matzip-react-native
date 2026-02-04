@@ -15,12 +15,12 @@
  * const navigation = useNavigation<Navigation>();
  * navigation.navigate('Login');  // 이동만 하면 됨
  */
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {AuthStackParamList} from '../../types/navigation';
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { AuthStackParamList } from "../../types/navigation";
 
 // StackNavigationProp: navigation만 포함 (이동 기능만 필요할 때)
 // route.params가 필요 없으므로 StackScreenProps 대신 이것을 사용
@@ -34,13 +34,9 @@ function AuthHomeScreen() {
   // useNavigation 훅에 타입 지정하여 navigation 객체 가져오기
   const navigation = useNavigation<Navigation>();
 
-  useEffect(() => {
-    console.log('hello world');
-  }, []);
-
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      <Text onPress={() => navigation.navigate('Login')}>로그인으로 이동</Text>
+    <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
+      <Text onPress={() => navigation.navigate("Login")}>로그인으로 이동</Text>
     </SafeAreaView>
   );
 }
