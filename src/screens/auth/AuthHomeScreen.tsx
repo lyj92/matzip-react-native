@@ -19,9 +19,11 @@ import { AuthStackParamList } from "@/types/navigation";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
+import { colors } from "@/constants/colors";
+
 // StackNavigationProp: navigation만 포함 (이동 기능만 필요할 때)
 // route.params가 필요 없으므로 StackScreenProps 대신 이것을 사용
 type Navigation = StackNavigationProp<AuthStackParamList>;
@@ -36,10 +38,22 @@ function AuthHomeScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
-      <CustomButton
-        label={"이메일 로그인"}
-        onPress={() => navigation.navigate("Login")}
-      />
+      <View style={styles?.imageContainer}>
+        <Image
+          style={styles?.image}
+          source={require("@/assets/matzip.png")}
+          resizeMode="contain"
+        />
+      </View>
+      <View style={styles?.buttonContainer}>
+        <CustomButton
+          label={"이메일 로그인"}
+          onPress={() => navigation.navigate("Login")}
+        />
+        <Pressable onPress={() => navigation?.navigate("Signup")}>
+          <Text style={styles?.emailText}>이메일로 가입하기</Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }
@@ -47,6 +61,23 @@ function AuthHomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  imageContainer: { flex: 1.5, alignItems: "center" },
+  image: {
+    width: 200,
+    height: "100%",
+  },
+  buttonContainer: {
+    flex: 1,
+    alignItems: "center",
+    paddingHorizontal: 30,
+    gap: 5,
+  },
+  emailText: {
+    textDecorationLine: "underline",
+    fontWeight: 500,
+    padding: 10,
+    color: colors?.BLACK,
   },
 });
 
