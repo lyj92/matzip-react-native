@@ -1,16 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AuthStackParamList } from "../../types/navigation";
 
-interface AuthHomeScreenProps {}
+// 전역 네비게이션 타입 선언 (auth)
+type Navigation = StackNavigationProp<AuthStackParamList>;
 
 /**
  * 인증 홈
  * @returns
  */
-function AuthHomeScreen({}: AuthHomeScreenProps) {
-  const navigation = useNavigation();
+function AuthHomeScreen() {
+  const navigation = useNavigation<Navigation>();
 
   useEffect(() => {
     console.log("hello world");
