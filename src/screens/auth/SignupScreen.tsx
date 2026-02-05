@@ -2,7 +2,7 @@ import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-
+import useForm from "@/hooks/useForm";
 interface SignupScreenProps {}
 
 /**
@@ -10,56 +10,33 @@ interface SignupScreenProps {}
  * @returns
  */
 function SignupScreen({}: SignupScreenProps) {
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-    passwordConfirm: "",
+  const signup = useForm({
+    initialValue: { email: "", password: "", passwordConfirm: "" },
   });
-
-  const [touched, setTouched] = useState({
-    email: false,
-    password: false,
-    passwordConfirm: false,
-  });
-
-  console.log(touched, "touched");
-
-  const handleBlur = (name: string) => {
-    setTouched((prev) => ({ ...prev, [name]: true }));
-  };
-
-  const handleChangeValue = (name: string, value: string) => {
-    setValues((prev) => ({ ...prev, [name]: value }));
-  };
-
   return (
     <SafeAreaView style={styles?.container}>
       <View style={styles?.inputContainer}>
         <InputField
           placeholder="이메일"
-          value={values?.email || ""}
-          touched={touched?.email}
-          onChangeText={(text) => handleChangeValue("email", text)}
-          onBlur={() => handleBlur("email")}
+          touched={signup?.touched?.email}
           error="이메일을 입력해주세요"
+          {...signup.getTextInputProps("email")}
         />
         <InputField
           secureTextEntry
           placeholder="비밀번호"
-          value={values?.password || ""}
-          touched={touched?.password}
-          onChangeText={(text) => handleChangeValue("password", text)}
-          onBlur={() => handleBlur("password")}
+          textContentType="oneTimeCode"
+          touched={signup?.touched?.password}
           error="비밀번호를 입력하세요"
+          {...signup.getTextInputProps("password")}
         />
         <InputField
           secureTextEntry
+          textContentType="oneTimeCode"
           placeholder="비밀번호 확인"
-          value={values?.passwordConfirm || ""}
-          touched={touched?.passwordConfirm}
-          onChangeText={(text) => handleChangeValue("passwordConfirm", text)}
-          onBlur={() => handleBlur("passwordConfirm")}
+          touched={signup?.touched?.passwordConfirm}
           error="비밀번호를 한 번 더 입력하세요"
+          {...signup.getTextInputProps("passwordConfirm")}
         />
       </View>
       <CustomButton label="회원가입" variant="filled" size="large" />
