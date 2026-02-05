@@ -1,7 +1,7 @@
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 
 interface LoginScreenProps {}
 
@@ -9,6 +9,7 @@ interface LoginScreenProps {}
  * 로그인 페이지
  * @returns
  */
+
 function LoginScreen({}: LoginScreenProps) {
   return (
     <SafeAreaView style={styles?.container}>
