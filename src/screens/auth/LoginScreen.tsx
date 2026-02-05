@@ -3,6 +3,8 @@ import InputField from "@/components/InputField";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import useForm from "@/hooks/useForm";
+import { validateLogin } from "@/utils/validation";
+
 interface LoginScreenProps {}
 
 /**
@@ -12,7 +14,8 @@ interface LoginScreenProps {}
 
 function LoginScreen({}: LoginScreenProps) {
   const login = useForm({
-    initialValue: { email: "", password: "", passwordConfirm: "" },
+    initialValue: { email: "", password: "" },
+    validate: validateLogin,
   });
 
   return (
@@ -20,13 +23,16 @@ function LoginScreen({}: LoginScreenProps) {
       <View style={styles?.inputContainer}>
         <InputField
           placeholder="이메일"
-          error={"이메일을 입력하세요"}
+          touched={login?.touched?.email}
+          error={login?.errors?.email}
           {...login?.getTextInputProps("email")}
         />
         <InputField
           secureTextEntry
           placeholder="비밀번호"
           textContentType="oneTimeCode"
+          touched={login?.touched?.password}
+          error={login?.errors?.password}
           {...login?.getTextInputProps("password")}
         />
       </View>

@@ -3,15 +3,16 @@ import InputField from "@/components/InputField";
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import useForm from "@/hooks/useForm";
-interface SignupScreenProps {}
+import { validateSignup } from "@/utils/validation";
 
 /**
  * 회원가입 페이지
  * @returns
  */
-function SignupScreen({}: SignupScreenProps) {
+function SignupScreen() {
   const signup = useForm({
     initialValue: { email: "", password: "", passwordConfirm: "" },
+    validate: validateSignup,
   });
   return (
     <SafeAreaView style={styles?.container}>
