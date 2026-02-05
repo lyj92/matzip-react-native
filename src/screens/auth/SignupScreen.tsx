@@ -20,7 +20,7 @@ function SignupScreen() {
         <InputField
           placeholder="이메일"
           touched={signup?.touched?.email}
-          error="이메일을 입력해주세요"
+          error={signup?.errors?.email}
           {...signup.getTextInputProps("email")}
         />
         <InputField
@@ -28,15 +28,14 @@ function SignupScreen() {
           placeholder="비밀번호"
           textContentType="oneTimeCode"
           touched={signup?.touched?.password}
-          error="비밀번호를 입력하세요"
+          error={signup?.errors?.password}
           {...signup.getTextInputProps("password")}
         />
         <InputField
           secureTextEntry
-          textContentType="oneTimeCode"
           placeholder="비밀번호 확인"
           touched={signup?.touched?.passwordConfirm}
-          error="비밀번호를 한 번 더 입력하세요"
+          error={signup?.errors?.passwordConfirm}
           {...signup.getTextInputProps("passwordConfirm")}
         />
       </View>
