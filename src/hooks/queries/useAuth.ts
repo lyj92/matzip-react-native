@@ -9,6 +9,7 @@ import { removeHeader, setHeader } from "@/utils/header";
 import { numbers } from "@/constants/number";
 import { useEffect } from "react";
 import { Profile } from "@/types/domain";
+import queryClient from "@/api/queryClient";
 // 회원가입 훅
 function useSignup(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
@@ -24,6 +25,10 @@ function useLogin(mutationOptions?: UseMutationCustomOptions) {
     onSuccess: async ({ accessToken, refreshToken }) => {
       setHeader("Authorization", `Bearer ${accessToken}`);
       await setEncryptStorage("refreshToken", refreshToken);
+      // 로그인 후 토큰 갱신 훅 동작
+      queryClient.fetchQuery({
+        queryKey: ["auth", "getAccessToken"],
+      });
     },
     ...mutationOptions,
   });
@@ -61,7 +66,8 @@ function useGetRefreshToken(mutationOptions?: UseMutationCustomOptions) {
   return { isSuccess, isError };
 }
 
-function useGetProfile(UseMutationOptions: UseQueryCustomOptions<Profile>) {
+// 프로필 정보 조횐
+function useGetProfile(queryOptions?: UseQueryCustomOptions<Profile>) {
   return useQuery({
     queryFn: getProfile,
     queryKey: [""],
@@ -69,4 +75,18 @@ function useGetProfile(UseMutationOptions: UseQueryCustomOptions<Profile>) {
   });
 }
 
-export { useSignup, useLogin, useGetRefreshToken, useGetProfile };
+// useAuth 훅으로 묶음
+function useAuth() {
+  const signupMutation = useSignup();
+  const loginMutation = useLogin();
+  const refreshTokenQuery = useGetRefreshToken();
+
+  // refreshTokenQuery의 쿼리 결과가 성공이면 useGetProfile 쿼리를 실행
+  const { data, isSuccess: isLogin } = useGetProfile({
+    enabled: refreshTokenQuery.isSuccess,
+  });
+
+  return { signupMutation, loginMutation, isLogin };
+}
+
+export default useAuth;
