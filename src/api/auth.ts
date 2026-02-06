@@ -1,6 +1,6 @@
 import { Profile } from "@/types/domain";
 import { getEncryptStorage } from "@/utils/encryptStorage";
-import { axiosInstance } from "./axios";
+import axiosInstance from "./axios";
 
 type RequestUser = {
   email: string;
@@ -9,7 +9,7 @@ type RequestUser = {
 
 // 회원가입
 async function postSignup({ email, password }: RequestUser): Promise<void> {
-  await axiosInstance.post(`'/auth/signup`, {
+  await axiosInstance.post(`/auth/signup`, {
     email,
     password,
   });
@@ -25,16 +25,18 @@ async function postLogin({
   email,
   password,
 }: RequestUser): Promise<ResponseToken> {
-  const { data } = await axiosInstance.post(`'/auth/signin`, {
+  const { data } = await axiosInstance.post(`/auth/signin`, {
     email,
     password,
   });
+
+  console.log(data, "로그인 응답");
   return data;
 }
 
 // 프로필 조회
 async function getProfile(): Promise<Profile> {
-  const { data } = await axiosInstance.get(`'/auth/me`);
+  const { data } = await axiosInstance.get(`/auth/me`);
   return data;
 }
 
@@ -50,7 +52,6 @@ async function getAccessToken(): Promise<ResponseToken> {
 }
 
 // 로그아웃
-
 async function logout() {
   await axiosInstance.get(`/auth/logout`);
 }
