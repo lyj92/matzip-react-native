@@ -23,8 +23,7 @@ function LoginScreen({}: LoginScreenProps) {
   });
 
   const handleSubmit = () => {
-    const { email, password } = login?.values;
-    loginMutation.mutate({ email, password });
+    loginMutation.mutate(login?.values);
   };
 
   return (

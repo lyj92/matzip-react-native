@@ -20,10 +20,7 @@ function SignupScreen() {
   });
 
   const handleSubmit = () => {
-    console.log(signup?.values, "values");
-
     const { email, password } = signup?.values;
-
     signupMutation.mutate({ email, password });
   };
 
