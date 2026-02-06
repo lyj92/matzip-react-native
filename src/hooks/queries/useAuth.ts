@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { getAccessToken, getProfile, postLogin, postSignup } from "@/api/auth";
 import { UseMutationCustomOptions, UseQueryCustomOptions } from "@/types/api";
 import {
@@ -9,7 +9,7 @@ import { removeHeader, setHeader } from "@/utils/header";
 import { numbers } from "@/constants/number";
 import { useEffect } from "react";
 import { Profile } from "@/types/domain";
-import { useAuthStore } from "@/store/store";
+import queryClient from "@/api/queryClient";
 // 회원가입 훅
 function useSignup(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
@@ -20,47 +20,47 @@ function useSignup(mutationOptions?: UseMutationCustomOptions) {
 
 // 로그인 훅
 function useLogin(mutationOptions?: UseMutationCustomOptions) {
-  const { setIsLogin } = useAuthStore();
-
   return useMutation({
     mutationFn: postLogin,
     onSuccess: async ({ accessToken, refreshToken }) => {
       setHeader("Authorization", `Bearer ${accessToken}`);
       await setEncryptStorage("refreshToken", refreshToken);
-      // 로그인 성공 시 전역 상태 업데이트
-      setIsLogin(true);
+      // 로그인 후 토큰 갱신 훅 동작
+      queryClient.fetchQuery({
+        queryKey: ["auth", "getAccessToken"],
+      });
     },
     ...mutationOptions,
   });
 }
 
 // 토큰 갱신
-function useGetRefreshToken() {
-  const { setIsLogin } = useAuthStore();
+function useGetRefreshToken(mutationOptions?: UseMutationCustomOptions) {
   const { data, isSuccess, isError } = useQuery({
     queryKey: ["auth", "getAccessToken"],
     queryFn: getAccessToken,
     staleTime: numbers.ACCESS_TOKEN_REFRESH_TIME,
     refetchInterval: numbers.ACCESS_TOKEN_REFRESH_TIME,
-    retry: false,
   });
 
-  // 성공 시 accessToken 저장 + 로그인 상태 true
+  // 성공 시 accessToken 저장
   useEffect(() => {
-    if (isSuccess && data) {
-      setHeader("Authorization", `Bearer ${data.accessToken}`);
-      setEncryptStorage("refreshToken", data.refreshToken);
-      setIsLogin(true);
-    }
-  }, [isSuccess, data]);
+    (async () => {
+      if (isSuccess) {
+        setHeader("Authorization", `Bearer ${data.accessToken}`);
+        await setEncryptStorage("refreshToken", data.refreshToken);
+      }
+    })();
+  }, [isSuccess]);
 
-  // 실패 시 토큰 제거 + 로그아웃
+  // 실패 시 헤더 리프레시 토큰, Authorization 제거
   useEffect(() => {
-    if (isError) {
-      removeHeader("Authorization");
-      removeEncryptStorage("refreshToken");
-      setIsLogin(false);
-    }
+    (async () => {
+      if (isError) {
+        removeHeader("Authorization");
+        await removeEncryptStorage("refreshToken");
+      }
+    })();
   }, [isError]);
 
   return { isSuccess, isError };
@@ -70,22 +70,22 @@ function useGetRefreshToken() {
 function useGetProfile(queryOptions?: UseQueryCustomOptions<Profile>) {
   return useQuery({
     queryFn: getProfile,
-    queryKey: [""],
+    queryKey: ["auth", "getProfile"],
     ...queryOptions,
   });
 }
 
 // useAuth 훅으로 묶음
 function useAuth() {
-  const { isLogin } = useAuthStore();
   const signupMutation = useSignup();
   const loginMutation = useLogin();
   const refreshTokenQuery = useGetRefreshToken();
 
-  // refreshTokenQuery의 쿼리 결과가 성공이면 useGetProfile 쿼리를 실행
-  const { data } = useGetProfile({
-    enabled: isLogin,
+  const { data, isSuccess: isLogin } = useGetProfile({
+    enabled: refreshTokenQuery.isSuccess,
   });
+
+  console.log(isLogin, "isLogin");
 
   return { signupMutation, loginMutation, isLogin };
 }

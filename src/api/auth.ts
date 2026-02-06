@@ -29,8 +29,6 @@ async function postLogin({
     email,
     password,
   });
-
-  console.log(data, "로그인 응답");
   return data;
 }
 

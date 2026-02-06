@@ -11,7 +11,7 @@ import useAuth from "@/hooks/queries/useAuth";
  * @returns
  */
 function SignupScreen() {
-  const { signupMutation } = useAuth();
+  const { signupMutation, loginMutation } = useAuth();
   const passwordRef = useRef<TextInput | null>(null);
   const passwordConfirmRef = useRef<TextInput | null>(null);
   const signup = useForm({
@@ -21,7 +21,10 @@ function SignupScreen() {
 
   const handleSubmit = () => {
     const { email, password } = signup?.values;
-    signupMutation.mutate({ email, password });
+    signupMutation.mutate(
+      { email, password },
+      { onSuccess: () => loginMutation.mutate({ email, password }) }
+    );
   };
 
   return (
