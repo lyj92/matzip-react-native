@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/api/axios";
+import axiosInstance from "@/api/axios";
 
 // 헤더 설정
 function setHeader(key: string, value: string) {
