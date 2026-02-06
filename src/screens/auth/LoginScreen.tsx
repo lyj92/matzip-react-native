@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { SafeAreaView, StyleSheet, TextInput, View } from "react-native";
 import useForm from "@/hooks/useForm";
 import { validateLogin } from "@/utils/validation";
+import useAuth from "@/hooks/queries/useAuth";
 
 interface LoginScreenProps {}
 
@@ -13,6 +14,7 @@ interface LoginScreenProps {}
  */
 
 function LoginScreen({}: LoginScreenProps) {
+  const { loginMutation } = useAuth();
   const passwordRef = useRef<TextInput | null>(null);
 
   const login = useForm({
@@ -21,7 +23,8 @@ function LoginScreen({}: LoginScreenProps) {
   });
 
   const handleSubmit = () => {
-    console.log(login?.values, "values");
+    const { email, password } = login?.values;
+    loginMutation.mutate({ email, password });
   };
 
   return (

@@ -4,12 +4,14 @@ import React, { useRef, useState } from "react";
 import { SafeAreaView, StyleSheet, TextInput, View } from "react-native";
 import useForm from "@/hooks/useForm";
 import { validateSignup } from "@/utils/validation";
+import useAuth from "@/hooks/queries/useAuth";
 
 /**
  * 회원가입 페이지
  * @returns
  */
 function SignupScreen() {
+  const { signupMutation } = useAuth();
   const passwordRef = useRef<TextInput | null>(null);
   const passwordConfirmRef = useRef<TextInput | null>(null);
   const signup = useForm({
@@ -19,6 +21,10 @@ function SignupScreen() {
 
   const handleSubmit = () => {
     console.log(signup?.values, "values");
+
+    const { email, password } = signup?.values;
+
+    signupMutation.mutate({ email, password });
   };
 
   return (
