@@ -23,7 +23,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
     });
   };
 
-  usePermission();
+  usePermission("LOCATION");
 
   const handlePressUserLocation = () => {
     if (isUserLocationError) {
@@ -39,6 +39,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
         color={colors.WHITE}
       />
       <MapView
+        googleMapId="c91abfa80c861a9c8b815800"
         ref={mapRef}
         style={styles?.containter}
         provider={PROVIDER_GOOGLE}
