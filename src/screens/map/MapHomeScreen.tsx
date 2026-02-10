@@ -9,7 +9,7 @@ import useUserLocation from "@/hooks/useUserLocation";
 import { numbers } from "@/constants/number";
 import usePermission from "@/hooks/usePermission";
 import Toast from "react-native-toast-message";
-
+import Config from "react-native-config";
 interface MapHomeScreenProps {}
 
 function MapHomeScreen({}: MapHomeScreenProps) {
@@ -25,6 +25,8 @@ function MapHomeScreen({}: MapHomeScreenProps) {
   };
 
   usePermission("LOCATION");
+
+  console.log(Config.GOOGLE_MAP_API_KEY);
 
   const handlePressUserLocation = () => {
     if (isUserLocationError) {
