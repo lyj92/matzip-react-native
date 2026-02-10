@@ -7,6 +7,8 @@ import { colors } from "@/constants/colors";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6";
 import useUserLocation from "@/hooks/useUserLocation";
 import { numbers } from "@/constants/number";
+import usePermission from "@/hooks/usePermission";
+
 interface MapHomeScreenProps {}
 
 function MapHomeScreen({}: MapHomeScreenProps) {
@@ -20,6 +22,8 @@ function MapHomeScreen({}: MapHomeScreenProps) {
       ...numbers.INITIAL_DELTA,
     });
   };
+
+  usePermission();
 
   const handlePressUserLocation = () => {
     if (isUserLocationError) {
