@@ -16,12 +16,29 @@ function useUserLocation() {
 
   const { isComeBack } = useAppState();
 
+  // 초기 마운트 시 위치 가져오기
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      (info) => {
+        setUserLocation(info.coords);
+      },
+      () => {
+        setIsUserLocationError(true);
+      },
+      {
+        enableHighAccuracy: true,
+      }
+    );
+  }, []);
+
+  // 백그라운드 → 포그라운드 복귀 시 위치 재요청 (설정에서 권한 변경 후 대응)
   useEffect(() => {
     if (!isComeBack) return;
 
     Geolocation.getCurrentPosition(
       (info) => {
         setUserLocation(info.coords);
+        setIsUserLocationError(false);
       },
       () => {
         setIsUserLocationError(true);
