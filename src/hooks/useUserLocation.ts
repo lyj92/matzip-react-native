@@ -1,6 +1,7 @@
 import Geolocation from "@react-native-community/geolocation";
 import { useEffect, useState } from "react";
 import { LatLng } from "react-native-maps";
+import useAppState from "./useAppState";
 /**
  * 구글 지도 위도 경도 가져오는 훅
  * @returns
@@ -12,7 +13,12 @@ function useUserLocation() {
   });
   const [isUserLocationError, setIsUserLocationError] =
     useState<boolean>(false);
+
+  const { isComeBack } = useAppState();
+
   useEffect(() => {
+    if (!isComeBack) return;
+
     Geolocation.getCurrentPosition(
       (info) => {
         setUserLocation(info.coords);
@@ -24,7 +30,7 @@ function useUserLocation() {
         enableHighAccuracy: true,
       }
     );
-  }, []);
+  }, [isComeBack]);
 
   return { userLocation, isUserLocationError };
 }
