@@ -1,4 +1,5 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
+import { LatLng } from "react-native-maps";
 
 /**
  * 맵 네비게이션 타입
@@ -11,7 +12,7 @@ import { NavigatorScreenParams } from "@react-navigation/native";
  */
 export type MapStackParamList = {
   MapHome: undefined;
-  AddLocation: undefined;
+  AddLocation: { location: LatLng };
   SearchLocation: undefined;
 };
 
