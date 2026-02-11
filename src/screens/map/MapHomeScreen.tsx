@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import DrawerButton from "@/components/DrawerButton";
-import MapView, { LatLng, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "@/constants/colors";
 import FontAwesome6 from "@react-native-vector-icons/fontawesome6";
@@ -9,7 +9,6 @@ import useUserLocation from "@/hooks/useUserLocation";
 import { numbers } from "@/constants/number";
 import usePermission from "@/hooks/usePermission";
 import Toast from "react-native-toast-message";
-import Config from "react-native-config";
 interface MapHomeScreenProps {}
 
 function MapHomeScreen({}: MapHomeScreenProps) {
@@ -17,6 +16,8 @@ function MapHomeScreen({}: MapHomeScreenProps) {
   const inset = useSafeAreaInsets();
   const mapRef = useRef<MapView | null>(null);
   const { userLocation, isUserLocationError } = useUserLocation();
+  const [selectLocation, setSelectLocation] = useState<LatLng | null>(null);
+
   const moveMapView = (coordinate: LatLng) => {
     mapRef.current?.animateToRegion({
       ...coordinate,
@@ -25,8 +26,6 @@ function MapHomeScreen({}: MapHomeScreenProps) {
   };
 
   usePermission("LOCATION");
-
-  console.log(Config.GOOGLE_MAP_API_KEY);
 
   const handlePressUserLocation = () => {
     if (isUserLocationError) {
@@ -56,7 +55,24 @@ function MapHomeScreen({}: MapHomeScreenProps) {
           ...userLocation,
           ...numbers.INITIAL_DELTA,
         }}
-      />
+        onLongPress={({ nativeEvent }) =>
+          setSelectLocation(nativeEvent.coordinate)
+        }
+      >
+        <Marker
+          coordinate={{
+            latitude: 37.5516032365118,
+            longitude: 126.98989626020192,
+          }}
+        />
+        <Marker
+          coordinate={{
+            latitude: 37.5516032365118,
+            longitude: 126.981626020192,
+          }}
+        />
+        {selectLocation && <Marker coordinate={selectLocation} />}
+      </MapView>
 
       <View style={styles?.buttonList}>
         <Pressable style={styles.mapButton} onPress={handlePressUserLocation}>
