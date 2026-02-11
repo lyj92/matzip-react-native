@@ -9,6 +9,7 @@ import useUserLocation from "@/hooks/useUserLocation";
 import { numbers } from "@/constants/number";
 import usePermission from "@/hooks/usePermission";
 import Toast from "react-native-toast-message";
+import CustomMarker from "@/components/CustomMarker";
 interface MapHomeScreenProps {}
 
 function MapHomeScreen({}: MapHomeScreenProps) {
@@ -59,18 +60,15 @@ function MapHomeScreen({}: MapHomeScreenProps) {
           setSelectLocation(nativeEvent.coordinate)
         }
       >
-        <Marker
+        <CustomMarker
+          score={3}
+          color={colors.PINK_400}
           coordinate={{
             latitude: 37.5516032365118,
             longitude: 126.98989626020192,
           }}
         />
-        <Marker
-          coordinate={{
-            latitude: 37.5516032365118,
-            longitude: 126.981626020192,
-          }}
-        />
+
         {selectLocation && <Marker coordinate={selectLocation} />}
       </MapView>
 
