@@ -5,7 +5,7 @@ type UserFormProps<T> = {
   validate: (values: T) => Record<keyof T, string>; // name을 key로 하고 에러메시지를 뱉음
 };
 /**
- * 회원가입 커스텀 훅
+ * 전역 입력 폼 커스텀 훅
  * @returns
  */
 function useForm<T>({ initialValue, validate }: UserFormProps<T>) {
@@ -13,7 +13,7 @@ function useForm<T>({ initialValue, validate }: UserFormProps<T>) {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleChangeValue = (name: keyof T, value: string) => {
+  const handleChangeValue = (name: keyof T, value: string | number | Date) => {
     setValues((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -22,7 +22,7 @@ function useForm<T>({ initialValue, validate }: UserFormProps<T>) {
   };
 
   const getTextInputProps = (name: keyof T) => {
-    const value = values[name];
+    const value = values[name] as string;
     const onChangeText = (value: string) => handleChangeValue(name, value);
     const onBlur = () => handleBlur(name);
     return { value, onChangeText, onBlur };
@@ -37,6 +37,7 @@ function useForm<T>({ initialValue, validate }: UserFormProps<T>) {
     values,
     touched,
     errors,
+    onChange: handleChangeValue,
     getTextInputProps,
   };
 }
