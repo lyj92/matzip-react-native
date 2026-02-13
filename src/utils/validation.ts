@@ -59,6 +59,7 @@ function validateAddPost(values: { title: string }) {
     title: "",
     description: "",
     date: "",
+    color: "",
   };
 
   if (values.title.trim() === "") {
