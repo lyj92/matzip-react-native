@@ -5,10 +5,15 @@ import CustomMarker from "./CustomMarker";
 
 interface MarkerColorInputProps {
   color: string;
+  score: number;
   onChangeColor: (value: string) => void;
 }
 
-function MarkerColorInput({ onChangeColor, color }: MarkerColorInputProps) {
+function MarkerColorInput({
+  onChangeColor,
+  color,
+  score,
+}: MarkerColorInputProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.markerLabel}>마커선택</Text>
@@ -30,7 +35,9 @@ function MarkerColorInput({ onChangeColor, color }: MarkerColorInputProps) {
                   color === selectColor && styles.pressedMarker,
                 ]}
               >
-                <CustomMarker color={selectColor} />
+                <View style={styles.ressabledBox}>
+                  <CustomMarker color={selectColor} score={score} />
+                </View>
               </Pressable>
             );
           })}
@@ -63,6 +70,9 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     borderWidth: 1,
     backgroundColor: colors.GRAY_300,
+  },
+  ressabledBox: {
+    margin: "auto",
   },
   pressedMarker: {
     borderWidth: 2,
