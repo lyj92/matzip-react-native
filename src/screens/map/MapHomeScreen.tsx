@@ -66,6 +66,7 @@ function MapHomeScreen() {
     }
 
     navigation.navigate("AddLocation", { location: selectLocation });
+    setSelectLocation(null);
   };
 
   return (
