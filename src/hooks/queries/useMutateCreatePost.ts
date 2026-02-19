@@ -14,7 +14,7 @@ const useMutateCreatePost = (mutationOptions?: UseMutationCustomOptions) => {
     onSuccess: () => {
       // 성공 시 마커 조회 리패치
       queryClient.invalidateQueries({
-        queryKey: [queryKeys.MARKER, queryKeys.GET_MARKERS],
+        queryKey: [queryKeys.GET_MARKERS],
       });
     },
     ...mutationOptions,

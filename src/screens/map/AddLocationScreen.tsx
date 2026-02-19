@@ -49,7 +49,6 @@ function AddLocationScreen({ route }: Props) {
   usePermission("PHOTO");
 
   const handleSubmit = () => {
-    console.log(postForm.values, "values");
     createPost.mutate(
       {
         address,
