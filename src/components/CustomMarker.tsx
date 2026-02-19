@@ -12,12 +12,14 @@ interface CustomMarkerProps extends MyMapMarkerProps {
   coordinate?: LatLng;
   color: string;
   score?: number;
+  onPress?: () => void;
 }
 
 function CustomMarker({
   coordinate,
   color,
   score = 5,
+  onPress,
   ...props
 }: CustomMarkerProps) {
   const markerView = (
