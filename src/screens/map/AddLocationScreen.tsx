@@ -4,10 +4,9 @@ import useForm from "@/hooks/useForm";
 import { MapStackParamList } from "@/types/navigation";
 import { validateAddPost } from "@/utils/validation";
 import { StackScreenProps } from "@react-navigation/stack";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import Config from "react-native-config";
 import { ScrollView } from "react-native-gesture-handler";
 import useGetAddress from "@/hooks/useGetAdress";
 import DatePicker from "react-native-date-picker";
@@ -17,10 +16,17 @@ import { colors } from "@/constants/colors";
 import ScoreInput from "@/components/ScoreInput";
 import FixedBottomCTA from "@/components/FixedBottomCTA";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ImageInput from "@/components/ImageInput";
+import usePermission from "@/hooks/usePermission";
+import useImagePicker from "@/hooks/useImagePicker";
+import PreViewImageList from "@/components/PreViewImageList";
+import { useMutateCreatePost } from "@/hooks/queries/useMutateCreatePost";
+import { useNavigation } from "@react-navigation/native";
 type Props = StackScreenProps<MapStackParamList, "AddLocation">;
 
 function AddLocationScreen({ route }: Props) {
   const { location } = route.params;
+  const navigation = useNavigation();
   const address = useGetAddress(location);
   const inset = useSafeAreaInsets();
   const postForm = useForm({
@@ -34,10 +40,29 @@ function AddLocationScreen({ route }: Props) {
     validate: validateAddPost,
   });
 
+  const imagePicker = useImagePicker();
+
+  const createPost = useMutateCreatePost();
+
   const [openDate, setOpenDate] = useState<boolean>(false);
+
+  usePermission("PHOTO");
 
   const handleSubmit = () => {
     console.log(postForm.values, "values");
+    createPost.mutate(
+      {
+        address,
+        ...location,
+        ...postForm.values,
+        imageUris: imagePicker.imageUris,
+      },
+      {
+        onSuccess: () => {
+          navigation.goBack();
+        },
+      }
+    );
   };
 
   return (
@@ -94,6 +119,13 @@ function AddLocationScreen({ route }: Props) {
           score={postForm.values.score}
           onChangeScore={(value) => postForm.onChange("score", value)}
         />
+        <View style={{ flexDirection: "row" }}>
+          <ImageInput onChange={imagePicker.handleChangeImage} />
+          <PreViewImageList
+            onDelete={imagePicker.delete}
+            imageUris={imagePicker.imageUris}
+          />
+        </View>
       </ScrollView>
 
       <FixedBottomCTA label="저장" onPress={handleSubmit} />
