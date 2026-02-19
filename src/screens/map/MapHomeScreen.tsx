@@ -15,6 +15,7 @@ import MapIconButton from "@/components/MapIconButton";
 import { useNavigation } from "@react-navigation/native";
 import { MapStackParamList } from "@/types/navigation";
 import { StackNavigationProp } from "@react-navigation/stack";
+import useGetMarkers from "@/hooks/queries/useGetMarkers";
 
 type Navigation = StackNavigationProp<MapStackParamList>;
 
@@ -25,6 +26,11 @@ function MapHomeScreen() {
 
   // inset 값 구하는 함수
   const inset = useSafeAreaInsets();
+
+  // 마커 배열 조회
+  const { data: markers = [] } = useGetMarkers();
+
+  console.log(markers, "markers");
 
   const { userLocation, isUserLocationError } = useUserLocation();
   const [selectLocation, setSelectLocation] = useState<LatLng | null>(null);
@@ -82,32 +88,13 @@ function MapHomeScreen() {
           setSelectLocation(nativeEvent.coordinate)
         }
       >
-        {[
-          {
-            id: 1,
-            color: colors.PINK_400,
-            score: 3,
-            coordinate: {
-              latitude: 37.5516032365118,
-              longitude: 126.98989626020192,
-            },
-          },
-          {
-            id: 2,
-            color: colors.BLUE_400,
-            score: 5,
-            coordinate: {
-              latitude: 37.5216032365118,
-              longitude: 126.97189626020192,
-            },
-          },
-        ].map((marker) => (
+        {markers.map(({ id, score, color, ...coordinate }) => (
           <CustomMarker
-            key={marker.id}
-            score={marker.score}
-            color={marker.color}
-            coordinate={marker.coordinate}
-            onPress={() => handlePressMarker(marker.coordinate)}
+            key={id}
+            score={score}
+            color={color}
+            coordinate={coordinate}
+            onPress={() => handlePressMarker(coordinate)}
           />
         ))}
 
